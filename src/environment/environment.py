@@ -11,7 +11,7 @@ class Simulator:
     def __init__(self):
         self.backward = False
     
-    def collect_data_from_traj(self, env, trajectory, p_trajectory, p_pos, e_pos, time, backward_option:bool = False, plot_lasers:bool = False):
+    def collect_data_from_traj(self, env, trajectory, p_trajectory, p_pos, e_pos, time, backward_option:bool = False, plot_lasers:bool = False, cycles:int=1):
         """
         Collect data from a trajectory
         Inputs:
@@ -72,7 +72,11 @@ class Simulator:
                 lasers.draw(env.screen, pursuiter.position[0], pursuiter.position[1])   
             
             # Draw the trajectory
-            evasor.position, pursuiter.position, t, traj_done = self.draw_trajectory(trajectory, p_trajectory, t, backward_option, cycles=1)
+            evasor.position, pursuiter.position, t, cycles, traj_done = self.draw_trajectory(trajectory,
+                                                                                      p_trajectory,
+                                                                                        t,
+                                                                                          backward_option,
+                                                                                            cycles=cycles)
             
             evasor.spawn(surface=env.screen)
             pursuiter.spawn(surface=env.screen)
@@ -104,9 +108,9 @@ class Simulator:
             cycles: Number of cycles for the trajectory (with backward option equal to True)
         """
         if backward_option:
-            if (t < len(trajectory)) and (not self.backward):  
+            if (t < len(trajectory)-1) and (not self.backward):  
                 t += 1
-                return trajectory[t], p_trajectory[t], t, False                     
+                return trajectory[t], p_trajectory[t], t, cycles, False                     
             else:                
                 self.backward = True               
                 t -=1
@@ -116,13 +120,13 @@ class Simulator:
                     self.backward = False
                     cycles -= 1
                     if cycles == 0:
-                        return e_position, p_position, t, True
+                        return e_position, p_position, t, cycles, True
                 
-                return e_position, p_position, t, False
+                return e_position, p_position, t, cycles, False
         else:
             if t < (len(trajectory)-1):
                 t += 1 
-                return trajectory[t], p_trajectory[t], t, False
+                return trajectory[t], p_trajectory[t], t, cycles, False
             else:
-                return trajectory[-1], p_trajectory[-1], t, True
+                return trajectory[-1], p_trajectory[-1], t, cycles, True
 
