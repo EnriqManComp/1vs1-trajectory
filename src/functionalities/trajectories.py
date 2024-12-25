@@ -174,30 +174,88 @@ def circle(restrictions, steps, player_pos, radius, p_radius):
 
     return trajectory, p_trajectory
 
-def sawtooth(restrictions, steps, player_dim, player_pos, p_dist, plot_wave=False):
-    """
-        Generate a sawtooth wave
-    """
+def sawtooth(restrictions, angle, steps, player_dim, player_pos, traj_dist, p_dist):
+    
     trajectory = []
     p_trajectory = []
 
-    x = np.linspace((restrictions[0] + 3*player_dim), (restrictions[3] - 3*player_dim), 100, endpoint=False)
-    amplitude = np.random.randint(restrictions[0] + 3*player_dim, restrictions[3] - 3*player_dim)
-    y = amplitude * signal.sawtooth(2 * np.pi * 1 * x)
+    # Initial position
+    x, y = player_pos
 
-    if plot_wave:
-        plt.plot(x, y)
-        plt.xlabel('Time')
-        plt.ylabel('Amplitude')
-        plt.title('Sawtooth Wave')
-        plt.grid(True)
-        plt.show()
+    # Final position
+    x_f = copy.deepcopy(x)
 
-    for i in range(len(x)):
-        trajectory.append([int(x[i]), int(y[i])])
-        p_trajectory.append([int(x[i]), int(y[i] + p_dist)])
+    y_f_points = []
+    x_f_points = []
+
+    while True:   
+        if abs(x_f - x) < traj_dist:
+            x_f = np.random.randint(restrictions[0] + player_dim, restrictions[2] - player_dim)
+        else:
+            break
+
+    y_f = copy.deepcopy(y)
+
+    # Sawtooth trajectory
+
+    # First triangle
+
+    h = (abs(x - x_f) // 4) * np.tan(np.radians(angle))
+    y_f_1 = y_f + h
+    x_f_1 = x + (abs(x - x_f) // 4)
+
+    # Discretize the line using linear interpolation
+    num_steps = max(abs(x_f_1 - x), abs(y_f_1 - y)) // steps
+
+    for i in range(int(num_steps + 1)):
+        t = i / num_steps
+        x_t = int(x + t * (x_f_1 - x))
+        y_t = int(y + t * (y_f_1 - y))
+        trajectory.append([x_t, y_t])
+    
+    # Second triangle
+
+    y_f_2 = copy.deepcopy(y_f)
+    x_f_2 = x_f - (abs(x - x_f) // 2)
+
+    # Discretize the line using linear interpolation
+    num_steps = max(abs(x_f_1 - x_f_2), abs(y_f_1 - y_f_2)) // steps
+
+    for i in range(int(num_steps + 1)):
+        t = i / num_steps
+        x_t = int(x_f_1 + t * (x_f_2 - x_f_1))
+        y_t = int(y_f_1 + t * (y_f_2 - y_f_1))
+        trajectory.append([x_t, y_t])
+
+    # Third triangle
+
+    y_f_3 = y_f - h
+    x_f_3 = x_f - (abs(x - x_f) // 4)
+
+    # Discretize the line using linear interpolation
+    num_steps = max(abs(x_f_2 - x_f_3), abs(y_f_2 - y_f_3)) // steps
+
+    for i in range(int(num_steps + 1)):
+        t = i / num_steps
+        x_t = int(x_f_2 + t * (x_f_3 - x_f_2))
+        y_t = int(y_f_2 + t * (y_f_3 - y_f_2))
+        trajectory.append([x_t, y_t])
+    
+    # Discretize the line using linear interpolation
+    num_steps = max(abs(x_f_3 - x_f), abs(y_f_3 - y_f)) // steps
+
+    for i in range(int(num_steps + 1)):
+        t = i / num_steps
+        x_t = int(x_f_3 + t * (x_f - x_f_3))
+        y_t = int(y_f_3 + t * (y_f - y_f_3))
+        trajectory.append([x_t, y_t])
+    
+    p_trajectory = copy.deepcopy(trajectory)
+
+    
 
     return trajectory, p_trajectory
+
 
 
 

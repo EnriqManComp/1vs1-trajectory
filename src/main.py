@@ -58,9 +58,11 @@ for episode in range(1, MAX_EPISODES):
         """
 
         e_traj, p_traj = sawtooth(restrictions=(18,18,188,188),
+                                angle = 60,
                                 steps=1,
                                 player_dim=16,
-                                player_pos=[160,25],
+                                player_pos=[50,100],
+                                traj_dist=40,
                                 p_dist=28)
                                 
         # Collect data from trajectories
@@ -70,7 +72,7 @@ for episode in range(1, MAX_EPISODES):
                                    p_pos = [160,50],
                                    e_pos = [160,25],
                                    time=cfg.TIME,
-                                   backward_option=True,
+                                   backward_option=False,
                                    plot_lasers=False,
                                    cycles=2)
         train_env.end_env()
