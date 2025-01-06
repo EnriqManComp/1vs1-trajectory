@@ -3,3 +3,6 @@ This is a project where a player tries to follow a trajectory given by another p
 
 # Trajectories
 - The blue player can be follow a line trajectory
+
+# Encoders
+- 

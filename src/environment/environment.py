@@ -5,11 +5,13 @@ import copy
 from .players import create_players, Lasers
 from .helpers import plot_area, get_laser_measurements
 from functionalities.trajectories import line
+from encoders.encode_state import EncodeState
 
 class Simulator:
 
     def __init__(self):
         self.backward = False
+        self.encoder = EncodeState()
     
     def collect_data_from_traj(self, env, trajectory, p_trajectory, p_pos, e_pos, time, backward_option:bool = False, plot_lasers:bool = False, cycles:int=1):
         """
@@ -85,6 +87,12 @@ class Simulator:
 
             # Get laser measures
             #laser_measures = get_laser_measurements(evasor_pos=evasor.position.copy(), lasers=lasers.lasers, obstacles=env.obstacles.obstacles)       
+            
+            # Get the representation of the state
+            first_plane, second_plane, third_plane, fourth_plane, twenty_first_plane, twenty_second_plane = self.encoder.encode(plane_dim=(200,200),
+                                                                                                                                state={"players": [pursuiter.position, evasor.position], "obstacles": env.obstacles.obstacles},
+                                                                                                                                current_player="pursuiter")
+            
             
             # Update screen
             env.update()

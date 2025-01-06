@@ -13,10 +13,10 @@ class Limits:
         self.wall_color = (255,200,0) # Yellow
 
         self.obstacles = []
-        self.obstacles.append([[5,-5],[195,-5], "up"]) # p1, p2, name
-        self.obstacles.append([[5,-195],[195,-195], "down"]) 
-        self.obstacles.append([[5,-5],[5,-195], "left"])
-        self.obstacles.append([[195,-5],[195,-195], "right"])
+        #self.obstacles.append([[5,-5],[195,-5], "up"]) # p1, p2, name
+        #self.obstacles.append([[5,-195],[195,-195], "down"]) 
+        #self.obstacles.append([[5,-5],[5,-195], "left"])
+        #self.obstacles.append([[195,-5],[195,-195], "right"])
 
         # Walls
         self.left_wall = None
@@ -25,10 +25,15 @@ class Limits:
         self.bottom_wall = None
 
         # PyGame Rectangle Object
-        self.left_wall_obj = (0, 0, 10, self.screen.get_height())
+        self.left_wall_obj = (0, 0, 10, self.screen.get_height()) # x, y, width, height
         self.top_wall_obj = (0, 0, self.screen.get_width(), 10)
         self.right_wall_obj = (self.screen.get_width() - 10, 0, 10, self.screen.get_height())
         self.bottom_wall_obj = (0, self.screen.get_height() - 10, self.screen.get_width(), 10)
+
+        self.obstacles.append(self.left_wall_obj)
+        self.obstacles.append(self.top_wall_obj)
+        self.obstacles.append(self.right_wall_obj)
+        self.obstacles.append(self.bottom_wall_obj)
 
     def render_walls(self):
         """
