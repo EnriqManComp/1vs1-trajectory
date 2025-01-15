@@ -32,15 +32,15 @@ for episode in range(1, MAX_EPISODES):
         
         # Create trajectories
         #e_traj, p_traj = circle((200,200), (18,18,188,188), 1, 16, [160,25], 50, 20)
-        """
-        e_traj, p_traj = line(direction="horizontal",
+        #"""
+        e_traj, p_traj = line(direction="vertical",
                               restrictions=(18,18,188,188),
                                 steps=1,
                                  player_dim=16,
                                   player_pos=[160,25],
                                    traj_dist=40,
                                     player_dist=30)
-        """
+        #"""
         """
         e_traj, p_traj = square(restrictions=(18,18,188,188),
                                 steps=1,
@@ -56,6 +56,7 @@ for episode in range(1, MAX_EPISODES):
                                 p_radius= 20)
         """
 
+        """
 
         e_traj, p_traj = sawtooth(restrictions=(18,18,188,188),
                                 angle = 60,
@@ -64,7 +65,7 @@ for episode in range(1, MAX_EPISODES):
                                 player_pos=[50,100],
                                 traj_dist=40,
                                 p_dist=28)
-        
+        """
         # Collect data from trajectories
         sim.collect_data_from_traj(env=train_env,
                                    trajectory= e_traj,

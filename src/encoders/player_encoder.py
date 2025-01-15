@@ -30,17 +30,17 @@ class PlayerEncoder(Encoder):
         # Central position of the opponent
         second_plane[opponent_position[0], opponent_position[1]] = 1
         # Surrounding positions of the players
-        for i in range(player_dim[0]//2):
-            for j in range(player_dim[1]//2):
-                first_plane[current_player_position[0] + i, current_player_position[1] + j] = 1
-                first_plane[current_player_position[0] - i, current_player_position[1] - j] = 1
+        for i in range(current_player_position[0] - player_dim[0], current_player_position[0] + player_dim[0]):
+            for j in range(current_player_position[1] - player_dim[1], current_player_position[1] + player_dim[1]):
+                first_plane[i, j] = 1
+        
+        for i in range(opponent_position[0] - player_dim[0], opponent_position[0] + player_dim[0]):
+            for j in range(opponent_position[1] - player_dim[1], opponent_position[1] + player_dim[1]):
+                second_plane[i, j] = 1
 
-                second_plane[opponent_position[0] + i, opponent_position[1] + j] = 1
-                second_plane[opponent_position[0] - i, opponent_position[1] - j] = 1
+        twenty_first_plane = self.current_player(plane_dim, current_player)
 
-        twenty_first_plane, twenty_second_plane = self.current_player(plane_dim, current_player)
-
-        return np.array(first_plane).astype(bool), np.array(second_plane).astype(bool), twenty_first_plane, twenty_second_plane
+        return np.array(first_plane).astype(bool), np.array(second_plane).astype(bool), twenty_first_plane
 
     def current_player(self, plane_dim, player:str):
         """
@@ -53,9 +53,7 @@ class PlayerEncoder(Encoder):
 
         if player == "pursuiter":
             twenty_first_plane = np.ones(plane_dim).astype(bool)
-            twenty_second_plane = np.zeros(plane_dim).astype(bool)
         else:
             twenty_first_plane = np.zeros(plane_dim).astype(bool)
-            twenty_second_plane = np.ones(plane_dim).astype(bool)
 
-        return twenty_first_plane, twenty_second_plane
+        return twenty_first_plane

@@ -89,10 +89,11 @@ class Simulator:
             #laser_measures = get_laser_measurements(evasor_pos=evasor.position.copy(), lasers=lasers.lasers, obstacles=env.obstacles.obstacles)       
             
             # Get the representation of the state
-            first_plane, second_plane, third_plane, fourth_plane, twenty_first_plane, twenty_second_plane = self.encoder.encode(plane_dim=(200,200),
-                                                                                                                                state={"players": [pursuiter.position, evasor.position], "obstacles": env.obstacles.obstacles},
-                                                                                                                                current_player="pursuiter")
+            first_plane, second_plane, third_plane, fourth_plane, twenty_first_plane = self.encoder.encode(plane_dim=(200,200),
+                                                                                                            state={"players": [pursuiter.position, evasor.position], "obstacles": env.obstacles.obstacles},
+                                                                                                            current_player="pursuiter")
             
+           
             
             # Update screen
             env.update()
