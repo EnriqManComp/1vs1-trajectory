@@ -1,21 +1,27 @@
 from .player_encoder import PlayerEncoder
 from .world_encoder import WorldEncoder
 from .hist_encoder import HistEncoder
+from .reward_plane import RewardPlane
 
 class EncodeState:
     def __init__(self):
         self.world_encoder = WorldEncoder()
         self.player_encoder = PlayerEncoder()
         self.hist_encoder = HistEncoder()
+        self.reward_plane = RewardPlane()
+
         
 
-    def encode(self, plane_dim, state, current_player):
+    def encode(self, plane_dim, state, current_player, zones):
         """
             Encode the game state into numeric data.
             Args:
+                plane_dim: tuple, dimensions of the plane
                 state: dict, game state (position of the players, list of obstacles)
+                current_player: str, current player ("pursuiter" or "evasor")
+                target_zone: pygame.Rect, target zone
         """
-        print(state)
+        
         # Encode the player
         if current_player == "pursuiter":            
             current_player_position = state['players'][0]
@@ -35,10 +41,16 @@ class EncodeState:
                                                                second_plane=second_plane,
                                                                obstacles=state['obstacles'])
         
-        sixth_plane = self.hist_encoder.encode(
+        sixth_to_fourteen_plane = self.hist_encoder.encode(
                                                current_player_plane=first_plane,
                                                opponent_plane=second_plane,
                                                current_player=current_player
                                                )
 
-        return first_plane, second_plane, third_plane, fourth_plane, twenty_first_plane
+        # Encode the reward plane
+        reward_plane = self.reward_plane.encode(plane_dim=plane_dim,
+                                                 current_player=current_player,
+                                                 zones=zones)
+
+
+        return first_plane, second_plane, third_plane, fourth_plane, sixth_to_fourteen_plane, twenty_first_plane

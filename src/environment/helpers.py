@@ -12,7 +12,10 @@ def plot_area(surface, color, pos, r):
 
     """
     
-    pygame.draw.circle(surface, color, (pos[0], pos[1]), r)
+    area = pygame.draw.circle(surface, color, (pos[0], pos[1]), r)
+
+    return area
+
 
 def get_laser_measurements(evasor_pos, lasers, obstacles):
         

@@ -64,9 +64,9 @@ class Simulator:
             # Render the world objects (obstacles, background)
             env.render_objects()
             # Plot the target zone around the evasor 
-            plot_area(surface=env.screen, color=(0, 255, 0), pos=evasor.position, r=40)
+            target_rect = plot_area(surface=env.screen, color=(0, 255, 0), pos=evasor.position, r=40)
             # Plot the danger zone around the evasor
-            plot_area(surface=env.screen, color=(108,59,170), pos=evasor.position, r=25)
+            danger_rect = plot_area(surface=env.screen, color=(108,59,170), pos=evasor.position, r=25)
 
             if plot_lasers:
                 # Laser draw
@@ -89,9 +89,10 @@ class Simulator:
             #laser_measures = get_laser_measurements(evasor_pos=evasor.position.copy(), lasers=lasers.lasers, obstacles=env.obstacles.obstacles)       
             
             # Get the representation of the state
-            first_plane, second_plane, third_plane, fourth_plane, twenty_first_plane = self.encoder.encode(plane_dim=(200,200),
+            first_plane, second_plane, third_plane, fourth_plane, sixth_to_fourteen_plane, twenty_first_plane = self.encoder.encode(plane_dim=(200,200),
                                                                                                             state={"players": [pursuiter.position, evasor.position], "obstacles": env.obstacles.obstacles},
-                                                                                                            current_player="pursuiter")
+                                                                                                            current_player="pursuiter",
+                                                                                                            zones={"target_zone":target_rect, "danger_zone":danger_rect})
             
            
             

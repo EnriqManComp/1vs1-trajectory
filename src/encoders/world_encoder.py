@@ -43,7 +43,7 @@ class WorldEncoder(Encoder):
         # Inverse the values to get the empty spaces
         fourth_plane = np.logical_not(fourth_plane)
     
-        
+        """
         matrix_255 = first_plane * 255
 
         # Visualize with Matplotlib
@@ -51,7 +51,7 @@ class WorldEncoder(Encoder):
         plt.colorbar(label='Pixel Intensity')
         plt.title('Boolean Matrix Visualization')
         plt.show()
-        
+        """
         
 
         return third_plane, fourth_plane

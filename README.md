@@ -6,3 +6,8 @@ This is a project where a player tries to follow a trajectory given by another p
 
 # Encoders
 - 
+
+# Problems
+- The visualization (so the data is inverted compared with the pygame visualization)
+- Distance or Binary representation
+- All obstacles with -1 value

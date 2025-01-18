@@ -4,7 +4,6 @@ This encoder track the eighth last movement of the current player
 
 """
 
-import numpy as np
 from encoders.base import Encoder
 
 class HistEncoder(Encoder):
