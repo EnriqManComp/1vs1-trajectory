@@ -38,11 +38,11 @@ class PlayerEncoder(Encoder):
             for j in range(opponent_position[1] - player_dim[1], opponent_position[1] + player_dim[1]):
                 second_plane[i, j] = 1
 
-        twenty_first_plane = self.current_player(plane_dim, current_player)
+        twenty_first_plane = self.current_player_plane(plane_dim, current_player)
 
         return np.array(first_plane).astype(bool), np.array(second_plane).astype(bool), twenty_first_plane
 
-    def current_player(self, plane_dim, player:str):
+    def current_player_plane(self, plane_dim, current_player:str):
         """
             Return two planes where the first plane has 1s when the current player is the pursuiter
             and the second plane has 1s when the current player is the evader.
@@ -51,9 +51,9 @@ class PlayerEncoder(Encoder):
                 player: str, name of the current player
         """
 
-        if player == "pursuiter":
-            twenty_first_plane = np.ones(plane_dim).astype(bool)
+        if current_player == "pursuiter":
+            twenty_first_plane = np.ones(plane_dim)
         else:
-            twenty_first_plane = np.zeros(plane_dim).astype(bool)
+            twenty_first_plane = np.zeros(plane_dim)
 
         return twenty_first_plane

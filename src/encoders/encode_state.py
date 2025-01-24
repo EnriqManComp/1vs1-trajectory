@@ -3,6 +3,7 @@ from .world_encoder import WorldEncoder
 from .hist_encoder import HistEncoder
 from .reward_plane import RewardPlane
 from .distance_plane import DistancePlane
+from .utils import viz
 
 class EncodeState:
     def __init__(self):
@@ -61,7 +62,15 @@ class EncodeState:
                                                      empty_plane=fourth_plane,
                                                      player_position=current_player_position,
                                                      player_dim=(8,8))
+        
+        viz(first_plane)
+        viz(second_plane)
+        viz(third_plane)
+        viz(fourth_plane)
+        viz(reward_plane)
+        viz(distance_plane)
+        viz(twenty_first_plane)
 
-        return first_plane, second_plane, third_plane,
-            fourth_plane, sixth_to_fourteen_plane, reward_plane,
+        return first_plane, second_plane, third_plane, \
+            fourth_plane, sixth_to_fourteen_plane, reward_plane, \
             distance_plane, twenty_first_plane

@@ -26,14 +26,6 @@ class DistancePlane(Encoder):
             self.distance(player_plane=player_plane, player_position=player_position, player_dim=player_dim)
             # Adding the obstruction
             self.distance_plane = np.logical_and(self.distance_plane, empty_plane)
-            
-            matrix_255 = self.distance_plane * 255
-
-            # Visualize with Matplotlib
-            plt.imshow(matrix_255)
-            plt.colorbar(label='Pixel Intensity')
-            plt.title('Boolean Matrix Visualization')
-            plt.show()
 
             return self.distance_plane
         else:

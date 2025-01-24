@@ -3,12 +3,14 @@ from environment.environment import Simulator
 from environment.world import Simple
 from cfg import cfg
 import gc
-from functionalities.trajectories import line, circle, square, sawtooth
+from scheduler import Scheduler
+
 
 
 #os.environ["SDL_VIDEODRIVER"] = "dummy"
 
 sim = Simulator()
+scheduler = Scheduler()
 
 load = False
 train = False
@@ -31,41 +33,18 @@ for episode in range(1, MAX_EPISODES):
         train_env = Simple()
         
         # Create trajectories
-        #e_traj, p_traj = circle((200,200), (18,18,188,188), 1, 16, [160,25], 50, 20)
-        #"""
-        e_traj, p_traj = line(direction="vertical",
-                              restrictions=(18,18,188,188),
-                                steps=1,
-                                 player_dim=16,
-                                  player_pos=[160,25],
-                                   traj_dist=40,
-                                    player_dist=30)
-        #"""
-        """
-        e_traj, p_traj = square(restrictions=(18,18,188,188),
-                                steps=1,
-                                 player_dim=16,
-                                  player_pos=[160,25],
-                                   p_dist=28)
-        """
-        """
-        e_traj, p_traj = circle(restrictions=(188,188),
-                                steps=1,
-                                player_pos=[160,25],
-                                radius= 50,
-                                p_radius= 20)
-        """
-
-        """
-
-        e_traj, p_traj = sawtooth(restrictions=(18,18,188,188),
-                                angle = 60,
-                                steps=1,
-                                player_dim=16,
-                                player_pos=[50,100],
-                                traj_dist=40,
-                                p_dist=28)
-        """
+        e_traj, p_traj = scheduler.trajectories(
+            traj_name="line",
+            direction="vertical",
+            restrictions=(18,18,188,188),
+            steps=1,
+            player_dim=8,
+            player_pos=[160,25],
+            traj_dist=40,
+            player_dist=30,
+            radius=50,
+            angle=60
+        )
         # Collect data from trajectories
         sim.collect_data_from_traj(env=train_env,
                                    trajectory= e_traj,
