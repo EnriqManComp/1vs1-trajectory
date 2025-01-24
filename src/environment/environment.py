@@ -87,12 +87,18 @@ class Simulator:
 
             # Get laser measures
             #laser_measures = get_laser_measurements(evasor_pos=evasor.position.copy(), lasers=lasers.lasers, obstacles=env.obstacles.obstacles)       
-            
+            current_player = "pursuiter"
+            if current_player == "pursuiter":
+                zones = {"target_zone":target_rect, "danger_zone":danger_rect}
+            else:
+                zones = {"pursuiter_center":pursuiter.position, "evasor_center":evasor.position}
             # Get the representation of the state
-            first_plane, second_plane, third_plane, fourth_plane, sixth_to_fourteen_plane, twenty_first_plane = self.encoder.encode(plane_dim=(200,200),
+            first_plane, second_plane, third_plane, fourth_plane, sixth_to_fourteen_plane, reward_plane, distance_plane, twenty_first_plane = self.encoder.encode(plane_dim=(200,200),
                                                                                                             state={"players": [pursuiter.position, evasor.position], "obstacles": env.obstacles.obstacles},
-                                                                                                            current_player="pursuiter",
-                                                                                                            zones={"target_zone":target_rect, "danger_zone":danger_rect})
+                                                                                                            current_player=current_player,
+                                                                                                            zones=zones)
+            
+
             
            
             

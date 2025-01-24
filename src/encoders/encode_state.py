@@ -2,6 +2,7 @@ from .player_encoder import PlayerEncoder
 from .world_encoder import WorldEncoder
 from .hist_encoder import HistEncoder
 from .reward_plane import RewardPlane
+from .distance_plane import DistancePlane
 
 class EncodeState:
     def __init__(self):
@@ -9,7 +10,7 @@ class EncodeState:
         self.player_encoder = PlayerEncoder()
         self.hist_encoder = HistEncoder()
         self.reward_plane = RewardPlane()
-
+        self.distance_plane = DistancePlane()
         
 
     def encode(self, plane_dim, state, current_player, zones):
@@ -50,7 +51,17 @@ class EncodeState:
         # Encode the reward plane
         reward_plane = self.reward_plane.encode(plane_dim=plane_dim,
                                                  current_player=current_player,
+                                                 empty_plane=fourth_plane,
                                                  zones=zones)
 
+        # Encode distance around the players
+        distance_plane = self.distance_plane.encode(plane_dim=plane_dim,
+                                                     current_player=current_player,
+                                                     player_plane=first_plane,
+                                                     empty_plane=fourth_plane,
+                                                     player_position=current_player_position,
+                                                     player_dim=(8,8))
 
-        return first_plane, second_plane, third_plane, fourth_plane, sixth_to_fourteen_plane, twenty_first_plane
+        return first_plane, second_plane, third_plane,
+            fourth_plane, sixth_to_fourteen_plane, reward_plane,
+            distance_plane, twenty_first_plane

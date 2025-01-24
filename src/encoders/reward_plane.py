@@ -10,15 +10,20 @@ class RewardPlane(Encoder):
     def name(self):
         return "reward_plane"
     
-    def encode(self, plane_dim, current_player, zones):
+    def encode(self, plane_dim, current_player, empty_plane, zones):
         
         self.reward_plane = np.zeros(plane_dim)
 
         if current_player == "pursuiter":
             self.pursuiter_reward(plane_dim=plane_dim, zones=zones)
+            # Remove no valid zones
+            self.reward_plane = np.logical_and(self.reward_plane, empty_plane)
+
             return self.reward_plane
         else:
-            self.evasor_reward(plane_dim=plane_dim, zones=zones)
+            self.evasor_reward(zones=zones)
+            # Remove no valid zones
+            self.reward_plane = np.logical_and(self.reward_plane, empty_plane)
             return self.reward_plane
     
     def pursuiter_reward(self, plane_dim, zones):
@@ -42,6 +47,7 @@ class RewardPlane(Encoder):
         self.reward_plane = np.logical_or(self.reward_plane, target_zone)
         self.reward_plane = np.logical_xor(self.reward_plane, danger_zone)
 
+        """
         matrix_255 = self.reward_plane * 255
 
         # Visualize with Matplotlib
@@ -49,6 +55,70 @@ class RewardPlane(Encoder):
         plt.colorbar(label='Pixel Intensity')
         plt.title('Boolean Matrix Visualization')
         plt.show()
+        """
 
+    def evasor_reward(self, zones):
+        """
+            Encode the reward plane for the evasor
+        """
+
+        x_p = zones["pursuiter_center"][0]
+        y_p = zones["pursuiter_center"][1]
+        x_e = zones["evasor_center"][0]
+        y_e = zones["evasor_center"][1]
+
+        # Pursuiter in the first quadrant
+        if x_p < x_e and y_p < y_e:
+            self.reward_plane[int(x_e):(int(x_e)+10), int(y_e)-10:(int(y_e)+10)] = 1
+            self.reward_plane[int(x_e)-10:int(x_e), int(y_e):(int(y_e)+10)] = 1
+        # Pursuiter in the second quadrant
+        elif x_p > x_e and y_p < y_e:
+            self.reward_plane[int(x_e)-10:(int(x_e)), int(y_e)-10:(int(y_e)+10)] = 1
+            self.reward_plane[int(x_e):(int(x_e)+10), int(y_e):(int(y_e)+10)] = 1
+        # Pursuiter in the third quadrant
+        elif x_p > x_e and y_p > y_e:
+            self.reward_plane[int(x_e)-10:(int(x_e)+10), int(y_e)-10:(int(y_e))] = 1
+            self.reward_plane[int(x_e)-10:(int(x_e)), int(y_e):(int(y_e)+10)] = 1
+        # Pursuiter in the fourth quadrant
+        elif x_p < x_e and y_p > y_e:
+            self.reward_plane[int(x_e)-10:(int(x_e)+10), int(y_e)-10:(int(y_e))] = 1
+            self.reward_plane[int(x_e):int(x_e)+10, int(y_e):(int(y_e)+10)] = 1
+        # Pursuiter in the same x-axis
+        elif x_p == x_e and y_p < y_e:
+            self.reward_plane[int(x_e)-10:(int(x_e)+10), int(y_e):(int(y_e)+10)] = 1
+        elif x_p == x_e and y_p > y_e:
+            self.reward_plane[int(x_e)-10:(int(x_e)+10), int(y_e)-10:(int(y_e))] = 1
+        # Pursuiter in the same y-axis
+        elif y_p == y_e and x_p < x_e:
+            self.reward_plane[int(x_e):(int(x_e)+10), int(y_e)-10:(int(y_e)+10)] = 1
+        elif y_p == y_e and x_p > x_e:
+            self.reward_plane[int(x_e)-10:(int(x_e)), int(y_e)-10:(int(y_e)+10)] = 1
+        
+        """
+        matrix_255 = self.reward_plane * 255
+
+        # Visualize with Matplotlib
+        plt.imshow(matrix_255)
+        plt.colorbar(label='Pixel Intensity')
+        plt.title('Boolean Matrix Visualization')
+        plt.show()
+        """
+
+def midpoint(x1, y1, x2, y2):
+  
+    """Calculates the center point between two points.
+
+        Args:
+        x1: The x-coordinate of the first point.
+        y1: The y-coordinate of the first point.
+        x2: The x-coordinate of the second point.
+        y2: The y-coordinate of the second point.
+
+        Returns:
+        A tuple containing the x and y coordinates of the center point.
+    """
+    x_mid = (x1 + x2) / 2
+    y_mid = (y1 + y2) / 2
+    return x_mid, y_mid
 
         
