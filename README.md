@@ -12,4 +12,5 @@ This is a project where a player tries to follow a trajectory given by another p
 - Distance or Binary representation
 - All obstacles with -1 value
 - THe 'fors' that run over the planes for fill with the 1's can get out of range
-- Out of index in planes
+- Out of range in planes
+- Stop evasor before out of range or have a collision

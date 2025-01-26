@@ -1,4 +1,5 @@
 from functionalities.trajectories import line, circle, square, sawtooth
+import random
 
 class Scheduler:
     def __init__(self):
@@ -10,8 +11,23 @@ class Scheduler:
         }
 
     def scheduler(self):
+        traj_opt = random.randint(1, 5)
+        dir_options = ["horizontal", "vertical"]
+        dir_opt = random.choice(dir_options)
 
-        pass
+        x_pos = random.randint(20, 180)
+        y_pos = random.randint(20, 180)
+
+        return self.trajectories(traj_name=traj_opt,
+                                 direction=dir_opt,
+                                 restrictions=(18,18,188,188),
+                                 steps=random.choice([1,2,3], p=[0.6, 0.3, 0.1]),
+                                 player_dim=16,
+                                 player_pos=[x_pos,y_pos],
+                                 traj_dist=random.randint(20, 40),
+                                 player_dist=30,
+                                 radius=random.randint(20, 50),
+                                 angle=random.randint(20, 60))
 
     def trajectories(self, traj_name, direction, restrictions, steps, player_dim, player_pos, traj_dist, player_dist, radius, angle):
         if traj_name == "line":
