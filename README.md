@@ -14,3 +14,9 @@ This is a project where a player tries to follow a trajectory given by another p
 - THe 'fors' that run over the planes for fill with the 1's can get out of range
 - Out of range in planes
 - Stop evasor before out of range or have a collision
+
+# TO DO
+- Turn play
+- Know the valid movement a priori.
+- check evasor collision
+- Save data

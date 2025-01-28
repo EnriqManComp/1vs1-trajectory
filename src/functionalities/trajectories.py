@@ -211,7 +211,11 @@ def sawtooth(restrictions, angle, steps, player_dim, player_pos, traj_dist, p_di
         t = i / num_steps
         x_t = int(x + t * (x_f_1 - x))
         y_t = int(y + t * (y_f_1 - y))
+
+        y_t_p = y_t + p_dist
+
         trajectory.append([x_t, y_t])
+        p_trajectory.append([x_t, y_t_p])
     
     # Second triangle
 
@@ -225,7 +229,11 @@ def sawtooth(restrictions, angle, steps, player_dim, player_pos, traj_dist, p_di
         t = i / num_steps
         x_t = int(x_f_1 + t * (x_f_2 - x_f_1))
         y_t = int(y_f_1 + t * (y_f_2 - y_f_1))
+
+        y_t_p = y_t + p_dist
+
         trajectory.append([x_t, y_t])
+        p_trajectory.append([x_t, y_t_p])
 
     # Third triangle
 
@@ -239,8 +247,12 @@ def sawtooth(restrictions, angle, steps, player_dim, player_pos, traj_dist, p_di
         t = i / num_steps
         x_t = int(x_f_2 + t * (x_f_3 - x_f_2))
         y_t = int(y_f_2 + t * (y_f_3 - y_f_2))
+
+        y_t_p = y_t + p_dist
+
         trajectory.append([x_t, y_t])
-    
+        p_trajectory.append([x_t, y_t_p])
+
     # Discretize the line using linear interpolation
     num_steps = max(abs(x_f_3 - x_f), abs(y_f_3 - y_f)) // steps
 
@@ -248,9 +260,11 @@ def sawtooth(restrictions, angle, steps, player_dim, player_pos, traj_dist, p_di
         t = i / num_steps
         x_t = int(x_f_3 + t * (x_f - x_f_3))
         y_t = int(y_f_3 + t * (y_f - y_f_3))
+
+        y_t_p = y_t + p_dist
+
         trajectory.append([x_t, y_t])
-    
-    p_trajectory = copy.deepcopy(trajectory)
+        p_trajectory.append([x_t, y_t_p])
 
     
 

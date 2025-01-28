@@ -16,7 +16,7 @@ def create_players(player:str) -> object:
 class Players:
     def __init__(self):
         self.position = [0,0] # position in the environment
-        self.color = (0,0,255) # color of the player
+        self.color = (255,0,0) # color of the player
         # Object in pygame
         self.player = None
         # Velocity
@@ -90,10 +90,12 @@ class Players:
 class Evasor(Players):
     def __init__(self):
         super().__init__()
+        
 
 class Pursuiter(Players):
     def __init__(self):
         super().__init__()
+    
 
 class Lasers():
     def __init__(self):        

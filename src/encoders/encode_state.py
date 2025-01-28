@@ -14,7 +14,7 @@ class EncodeState:
         self.distance_plane = DistancePlane()
         
 
-    def encode(self, plane_dim, state, current_player, zones):
+    def encode(self, plane_dim, state, current_player, zones, visualize:bool=False):
         """
             Encode the game state into numeric data.
             Args:
@@ -22,6 +22,8 @@ class EncodeState:
                 state: dict, game state (position of the players, list of obstacles)
                 current_player: str, current player ("pursuiter" or "evasor")
                 target_zone: pygame.Rect, target zone
+                zones: dict, zones of interest (target zone, danger zone, etc.)
+                visualize: bool, flag to indicate if the planes should be visualized
         """
         
         # Encode the player
@@ -62,14 +64,15 @@ class EncodeState:
                                                      empty_plane=fourth_plane,
                                                      player_position=current_player_position,
                                                      player_dim=(8,8))
-        
-        viz(first_plane)
-        viz(second_plane)
-        viz(third_plane)
-        viz(fourth_plane)
-        viz(reward_plane)
-        viz(distance_plane)
-        viz(twenty_first_plane)
+        if visualize:
+            viz(first_plane)
+            viz(second_plane)
+            viz(third_plane)
+            viz(fourth_plane)
+            viz(sixth_to_fourteen_plane)
+            viz(reward_plane)
+            viz(distance_plane)
+            viz(twenty_first_plane)
 
         return first_plane, second_plane, third_plane, \
             fourth_plane, sixth_to_fourteen_plane, reward_plane, \

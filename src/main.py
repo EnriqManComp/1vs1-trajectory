@@ -33,8 +33,11 @@ for episode in range(1, MAX_EPISODES):
         train_env = Simple()
         
         # Create trajectories
+        e_traj, p_traj = scheduler.scheduler()
+        
+        """
         e_traj, p_traj = scheduler.trajectories(
-            traj_name="line",
+            traj_name="sawtooth",
             direction="vertical",
             restrictions=(18,18,188,188),
             steps=1,
@@ -45,6 +48,7 @@ for episode in range(1, MAX_EPISODES):
             radius=50,
             angle=60
         )
+        """
         # Collect data from trajectories
         sim.collect_data_from_traj(env=train_env,
                                    trajectory= e_traj,

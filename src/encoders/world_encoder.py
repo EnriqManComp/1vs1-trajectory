@@ -66,7 +66,7 @@ class WorldEncoder(Encoder):
                 plane: numpy array, empty plane of given dimensions 
                 obstacles: list of tuples, (left, top, width, height)
         """
-        print(obstacles)
+        
         for obstacle in obstacles:
             left, top, width, height = obstacle
             plane[left:left+width, top:top+height] = 1
