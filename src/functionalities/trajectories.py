@@ -53,7 +53,10 @@ def line(direction, restrictions, steps, player_dim, player_pos, traj_dist, play
     p_trajectory = copy.deepcopy(trajectory)
 
     for i in range(len(p_trajectory)):
-        p_trajectory[i][1] += player_dist
+        if y + player_dist > restrictions[2]:
+            p_trajectory[i][1] -= player_dist
+        else:
+            p_trajectory[i][1] += player_dist
 
     return trajectory, p_trajectory
 

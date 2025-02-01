@@ -14,7 +14,7 @@ class EncodeState:
         self.distance_plane = DistancePlane()
         
 
-    def encode(self, plane_dim, state, current_player, zones, visualize:bool=False):
+    def encode(self, plane_dim, restrictions, state, current_player, zones, visualize:bool=False):
         """
             Encode the game state into numeric data.
             Args:
@@ -35,6 +35,7 @@ class EncodeState:
             opponent_position = state['players'][0]
 
         first_plane, second_plane, twenty_first_plane = self.player_encoder.encode(plane_dim=plane_dim,
+                                                                                                        restrictions=restrictions,
                                                                                                         current_player_position=current_player_position,
                                                                                                         opponent_position=opponent_position,
                                                                                                         player_dim=(8,8),

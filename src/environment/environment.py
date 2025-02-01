@@ -7,6 +7,7 @@ from .helpers import plot_area, get_laser_measurements
 from functionalities.trajectories import line
 from encoders.encode_state import EncodeState
 from functionalities.check_future_movement import CheckFutureMovement
+from .utils import save_planes_img
 
 class Simulator:
 
@@ -155,10 +156,15 @@ class Simulator:
 
             # Get the representation of the state according to the current player
             first_plane, second_plane, third_plane, fourth_plane, sixth_to_fourteen_plane, reward_plane, distance_plane, twenty_first_plane = self.encoder.encode(plane_dim=(200,200),
+                                                                                                            restrictions=wall_limits,
                                                                                                             state={"players": [pursuiter.position, evasor.position], "obstacles": env.obstacles.obstacles},
                                                                                                             current_player=current_player,
                                                                                                             zones=zones,
                                                                                                             visualize=False)          
+            
+            # Save planes as images
+            save_planes_img(first_plane, second_plane, third_plane, fourth_plane, sixth_to_fourteen_plane, reward_plane, distance_plane, twenty_first_plane)
+            
             # Update turn 
             self.turn = abs(self.turn - 1) # Update turn (0 for pursuiter, 1 for evasor)
 

@@ -15,8 +15,8 @@ class Scheduler:
         dir_options = ["horizontal", "vertical"]
         dir_opt = np.random.choice(dir_options)
 
-        x_pos = np.random.randint(20, 180)
-        y_pos = np.random.randint(20, 180)
+        x_pos = np.random.randint(25, 175)
+        y_pos = np.random.randint(25, 175)
 
         return self.trajectories(traj_name=self.traj[traj_opt],
                                  direction=dir_opt,
@@ -30,6 +30,7 @@ class Scheduler:
                                  angle=np.random.randint(20, 60))
 
     def trajectories(self, traj_name, direction, restrictions, steps, player_dim, player_pos, traj_dist, player_dist, radius, angle):
+        print(traj_name)
         if traj_name == "line":
             e_traj, p_traj = line(direction=direction,
                               restrictions=restrictions,

@@ -49,6 +49,7 @@ for episode in range(1, MAX_EPISODES):
             angle=60
         )
         """
+        
         # Collect data from trajectories
         sim.collect_data_from_traj(env=train_env,
                                    trajectory= e_traj,

@@ -11,7 +11,7 @@ class PlayerEncoder(Encoder):
     def name(self, player:str):
         return player
 
-    def encode(self, plane_dim, current_player_position, opponent_position, player_dim, current_player):
+    def encode(self, plane_dim, restrictions, current_player_position, opponent_position, player_dim, current_player):
         """
             Encode the game state into numeric data.
             Args:
@@ -32,10 +32,14 @@ class PlayerEncoder(Encoder):
         # Surrounding positions of the players
         for i in range(current_player_position[0] - player_dim[0], current_player_position[0] + player_dim[0]):
             for j in range(current_player_position[1] - player_dim[1], current_player_position[1] + player_dim[1]):
+                if (i > restrictions[2]) or (j > restrictions[3]) or (i < restrictions[0]) or (j < restrictions[1]):
+                    continue
                 first_plane[i, j] = 1
         
         for i in range(opponent_position[0] - player_dim[0], opponent_position[0] + player_dim[0]):
             for j in range(opponent_position[1] - player_dim[1], opponent_position[1] + player_dim[1]):
+                if (i > restrictions[2]) or (j > restrictions[3]) or (i < restrictions[0]) or (j < restrictions[1]):
+                    continue
                 second_plane[i, j] = 1
 
         twenty_first_plane = self.current_player_plane(plane_dim, current_player)
