@@ -7,7 +7,7 @@ from .helpers import plot_area, get_laser_measurements
 from functionalities.trajectories import line
 from encoders.encode_state import EncodeState
 from functionalities.check_future_movement import CheckFutureMovement
-from .utils import save_planes_img
+from .utils import PlaneSaver
 
 class Simulator:
 
@@ -17,11 +17,17 @@ class Simulator:
         self.turn = 1 # 0 for pursuiter, 1 for evasor, the first turn is for the evasor
         self.turn_done = False # Flag to indicate if the turn is done or not (True when the pursuiter and evasor have moved)
         self.check_future_movement = CheckFutureMovement()
+        self.episode = 0
+        self.plane_saver = PlaneSaver(root_dir="database", episode_number=self.episode)
     
-    def collect_data_from_traj(self, env, trajectory, p_trajectory, p_pos, e_pos, time, backward_option:bool = False, plot_lasers:bool = False, cycles:int=1):
+    def set_episode(self, episode):
+        self.episode = episode
+
+    def collect_data_from_traj(self, episode, env, trajectory, p_trajectory, p_pos, e_pos, time, backward_option:bool = False, plot_lasers:bool = False, cycles:int=1):
         """
         Collect data from a trajectory
         Inputs:
+            episode: Episode number
             env: New world
             trajectory: Trajectory of the evasor
             p_trajectory: Trajectory of the pursuiter
@@ -36,6 +42,8 @@ class Simulator:
                 return t
             else:
                 return t-1
+        
+        self.plane_saver.set_episode_number(episode)
         # Clock
         clock = pygame.time.Clock()
 
@@ -163,7 +171,7 @@ class Simulator:
                                                                                                             visualize=False)          
             
             # Save planes as images
-            save_planes_img(first_plane, second_plane, third_plane, fourth_plane, sixth_to_fourteen_plane, reward_plane, distance_plane, twenty_first_plane)
+            self.plane_saver.save_planes_img(first_plane, second_plane, third_plane, fourth_plane, sixth_to_fourteen_plane, reward_plane, distance_plane, twenty_first_plane)
             
             # Update turn 
             self.turn = abs(self.turn - 1) # Update turn (0 for pursuiter, 1 for evasor)

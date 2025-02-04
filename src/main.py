@@ -51,7 +51,9 @@ for episode in range(1, MAX_EPISODES):
         """
         
         # Collect data from trajectories
-        sim.collect_data_from_traj(env=train_env,
+        sim.collect_data_from_traj(
+                                    episode=episode,
+                                    env=train_env,
                                    trajectory= e_traj,
                                     p_trajectory= p_traj,
                                    p_pos = [160,50],
