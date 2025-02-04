@@ -35,6 +35,12 @@ class HistEncoder(Encoder):
         """
             Add the last movement of the pursuiter and evasor to the stack
         """
+        if len(self.pursuiter_hist) == 0:
+            for i in range(8):
+                self.pursuiter_hist.append(pursuiter_plane)
+                self.evasor_hist.append(evasor_plane)
+            return
+        
         self.pursuiter_hist.append(pursuiter_plane)
         self.evasor_hist.append(evasor_plane)
 

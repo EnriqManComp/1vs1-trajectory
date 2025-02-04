@@ -43,7 +43,13 @@ class Simulator:
             else:
                 return t-1
         
+        #### Update all the parameters
+        # Saver parameters
         self.plane_saver.set_episode_number(episode)
+        self.plane_saver.reset_database_counter()
+        # Position parameters
+
+        ####
         # Clock
         clock = pygame.time.Clock()
 
@@ -171,8 +177,9 @@ class Simulator:
                                                                                                             visualize=False)          
             
             # Save planes as images
-            self.plane_saver.save_planes_img(first_plane, second_plane, third_plane, fourth_plane, sixth_to_fourteen_plane, reward_plane, distance_plane, twenty_first_plane)
-            
+            #self.plane_saver.save_planes_img(first_plane, second_plane, third_plane, fourth_plane, sixth_to_fourteen_plane, reward_plane, distance_plane, twenty_first_plane)
+            # Save planes as matrix
+            self.plane_saver.save_planes_as_matrix(first_plane, second_plane, third_plane, fourth_plane, sixth_to_fourteen_plane, reward_plane, distance_plane, twenty_first_plane)
             # Update turn 
             self.turn = abs(self.turn - 1) # Update turn (0 for pursuiter, 1 for evasor)
 

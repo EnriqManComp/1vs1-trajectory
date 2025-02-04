@@ -1,6 +1,8 @@
 from functionalities.trajectories import line, circle, square, sawtooth
 import numpy as np
 
+np.random.seed(0)
+
 class Scheduler:
     def __init__(self):
         self.traj = {
