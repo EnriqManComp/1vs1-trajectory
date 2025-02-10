@@ -7,7 +7,7 @@ from scheduler import Scheduler
 
 
 
-#os.environ["SDL_VIDEODRIVER"] = "dummy"
+os.environ["SDL_VIDEODRIVER"] = "dummy"
 
 sim = Simulator()
 scheduler = Scheduler()
@@ -65,4 +65,5 @@ for episode in range(1, MAX_EPISODES):
         
         train_env.end_env()
 
+        print("Episode: ", episode)
         gc.collect()

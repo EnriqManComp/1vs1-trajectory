@@ -1,6 +1,7 @@
 from PIL import Image
 import numpy as np
 import os
+import h5py
 
 class PlaneSaver:
     def __init__(self, root_dir, episode_number):
@@ -60,11 +61,12 @@ class PlaneSaver:
         # Construct the file path
         file_path = os.path.join(dir_path, filename)
 
-        np.save(file_path, plane)
+        with h5py.File(os.path.join(dir_path, "database.h5"), "w") as f:
+            f.create_dataset(filename, data=plane)
 
     def save_planes_as_matrix(self, first_plane, second_plane, third_plane, fourth_plane, sixth_to_fourteen_plane, reward_plane, distance_plane, twenty_first_plane):
 
-        ### Save the planes as npy matrices
+        ### Save the planes as matrices
 
         self.save_planes_matrix(first_plane, 'first_plane.npy')
         self.save_planes_matrix(second_plane, 'second_plane.npy')
