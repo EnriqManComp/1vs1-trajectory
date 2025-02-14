@@ -49,7 +49,7 @@ for episode in range(1, MAX_EPISODES):
             angle=60
         )
         """
-        
+        print(f"Episode: {episode}, Pursuiter Current position: ({p_traj[0]}), Evasor Current position: ({e_traj[0]})")
         # Collect data from trajectories
         sim.collect_data_from_traj(
                                     episode=episode,
@@ -65,5 +65,4 @@ for episode in range(1, MAX_EPISODES):
         
         train_env.end_env()
 
-        print("Episode: ", episode)
         gc.collect()
