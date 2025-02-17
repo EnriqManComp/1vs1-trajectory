@@ -93,7 +93,7 @@ def square(restrictions, steps, player_dim, player_pos, p_dist=20):
             # Final position (top left corner)
             x_f = restrictions[0] + player_dim
             y_f = restrictions[1] + player_dim
-
+            
             x_f_p = restrictions[0] + player_dim + p_dist
             y_f_p = restrictions[1] + player_dim + p_dist
 

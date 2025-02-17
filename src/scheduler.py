@@ -17,8 +17,8 @@ class Scheduler:
         dir_options = ["horizontal", "vertical"]
         dir_opt = np.random.choice(dir_options)
 
-        x_pos = np.random.randint(25, 175)
-        y_pos = np.random.randint(25, 175)
+        x_pos = np.random.randint(75, 125)
+        y_pos = np.random.randint(75, 125)
 
         return self.trajectories(traj_name=self.traj[traj_opt],
                                  direction=dir_opt,

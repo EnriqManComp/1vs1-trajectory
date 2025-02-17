@@ -19,7 +19,7 @@ cfg.ACTIONS = {
     }
 
 cfg.EPISODES = 10_000
-cfg.COLLECT_DATA = 5_000
+cfg.COLLECT_DATA = 200
 cfg.TEST = 20
 
 cfg.GAMMA = 0.99
